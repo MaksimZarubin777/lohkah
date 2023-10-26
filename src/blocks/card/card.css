@@ -1,0 +1,27 @@
+.card {
+  /* border: 1px solid rgb(231, 222, 206, .5); */
+  background-color:rgb(231, 222, 206, .5);
+  border-radius: 20px;
+  width: 40vw;
+  height: auto;
+  min-height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: .2s ease;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.card:hover {
+  /* border: 1px solid rgb(230, 209, 173); */
+  background-color:rgb(66, 57, 55);
+}
+
+@media screen and (max-width: 550px) {
+  .card {
+    width: 70vw;
+    min-height: 20vh;
+  }
+}

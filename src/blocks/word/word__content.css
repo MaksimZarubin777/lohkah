@@ -1,0 +1,19 @@
+.word__content {
+  /* width: fit-content; */
+  /* border: 1px solid rgb(231, 222, 206); */
+  border-radius: 20px;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  /* border: 1px solid red; */
+  background-color:rgb(231, 222, 206, .5);
+}
+
+@media screen and (max-width: 550px) {
+  .word__content {
+    display: flex;
+    gap: 10px;
+    /* width: 80vw; */
+  }
+}
