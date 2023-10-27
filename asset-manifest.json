@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/lohkah/static/css/main.7227a0f8.css",
-    "main.js": "/lohkah/static/js/main.6b32d34a.js",
+    "main.js": "/lohkah/static/js/main.9ed95fc8.js",
     "static/js/787.6c56dc7e.chunk.js": "/lohkah/static/js/787.6c56dc7e.chunk.js",
     "static/media/BaseOne-Regular.otf": "/lohkah/static/media/BaseOne-Regular.8b92dbd95cdb76b2846c.otf",
     "static/media/Quicksand-Regular.ttf": "/lohkah/static/media/Quicksand-Regular.92bdfb12b7c69a04d2fc.ttf",
     "index.html": "/lohkah/index.html",
     "main.7227a0f8.css.map": "/lohkah/static/css/main.7227a0f8.css.map",
-    "main.6b32d34a.js.map": "/lohkah/static/js/main.6b32d34a.js.map",
+    "main.9ed95fc8.js.map": "/lohkah/static/js/main.9ed95fc8.js.map",
     "787.6c56dc7e.chunk.js.map": "/lohkah/static/js/787.6c56dc7e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7227a0f8.css",
-    "static/js/main.6b32d34a.js"
+    "static/js/main.9ed95fc8.js"
   ]
 }
