@@ -1,0 +1,15 @@
+.add-word__container {
+    /* border: 1px solid blue; */
+    /* border-radius: 20px; */
+    width: 70vw;
+    max-width: 400px;
+    padding: 35px;
+    /* background-color:rgb(231, 222, 206, .5);
+    color: rgb(43, 43, 43) */
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid rgb(43, 43, 43, .15);
+    color: rgb(43, 43, 43)
+}

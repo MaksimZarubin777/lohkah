@@ -1,0 +1,20 @@
+.language {
+  /* border: 1px solid red; */
+  display: flex;
+  gap: 5px;
+  width: fit-content;
+  align-self: flex-end;
+  font-family: 'Baseone', sans-serif;
+}
+
+.language p {
+  margin: 0;
+  opacity: .5;
+}
+
+.language p:hover {
+  opacity: 1;
+  cursor: pointer;
+  text-decoration: underline;
+  color: rgb(205, 59, 54)
+}

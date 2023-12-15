@@ -1,0 +1,28 @@
+.auth__form_input {
+  height: 35px;
+  /* border-radius: 5px; */
+  border: 1px solid rgb(43, 43, 43, .6);
+  font-family: 'Quicksand';
+  font-size: 20px;
+}
+
+.auth__form_input::placeholder {
+  font-size: 15px;
+  opacity: .5;
+}
+
+/* @media screen and (max-width: 800px) {
+.auth__form_input {
+  height: 30px;
+}
+
+  .auth__form_input::placeholder {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .auth__form_input::placeholder {
+    font-size: 12px;
+  }
+  } */

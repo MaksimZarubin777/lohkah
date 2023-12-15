@@ -1,0 +1,14 @@
+.word__button {
+  /* width: 5vw; */
+  /* min-width: 50px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: .3;
+  transition: .15s ease-in-out;
+  /* border: 1px solid black; */
+}
+
+.word__button:hover {
+  opacity: .7;
+}

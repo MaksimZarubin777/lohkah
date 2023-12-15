@@ -1,0 +1,32 @@
+.auth__container {
+  /* border: 1px solid blue; */
+  margin-top: 50px;
+  /* border-radius: 20px; */
+  font-family: 'Baseone', sans-serif;
+  width: 60vw;
+  max-width: 330px;
+  padding: 15px 35px 35px 35px;
+  /* background-color:rgb(231, 222, 206, .5); */
+  border: 1px solid rgb(43, 43, 43, .15);
+  color: rgb(43, 43, 43);
+  display: flex;
+  flex-direction: column;
+}
+/* 
+@media screen and (max-width: 800px) {
+  .auth__container {
+    width: 40vw;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .auth__container {
+    width: 50vw;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .auth__container {
+    width: 60vw;
+  }
+} */

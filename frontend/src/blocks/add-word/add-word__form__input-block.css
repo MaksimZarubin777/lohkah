@@ -1,0 +1,26 @@
+.add-word__form__input-block {
+  margin: 0;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.add-word__form__input-block label {
+  font-family: 'Quicksand', sans-serif;
+  margin-left: 3px;
+  }
+
+.add-word__form__input-block input {
+  height: 25px;
+  border-radius: 5px;
+  border: 1px solid rgb(43, 43, 43, .6);
+  max-width: 400px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.add-word__form__input-block input::placeholder {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 12px;
+  opacity: .7;
+}

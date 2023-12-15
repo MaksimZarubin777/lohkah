@@ -1,0 +1,13 @@
+.add-word__button {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  margin-top: 30px;
+  background-color:rgb(66, 57, 55);
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.add-word__button:hover {
+  background-color:rgb(205, 59, 54);
+}

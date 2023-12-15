@@ -1,0 +1,21 @@
+.profile {
+  border: 1px solid red;
+  width: 60vw;
+  margin: auto;
+  margin-top: 60px;
+  margin-bottom: 30px;
+  padding: 35px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+
+  border: 1px solid rgb(43, 43, 43, .15);
+  color: rgb(43, 43, 43)
+}
+
+.profile p {
+  margin: 0;
+  
+}
