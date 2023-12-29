@@ -1,6 +1,6 @@
 .card__title {
   margin: 0;
-  font-family: 'Baseone', sans-serif;
+  font-family: var(--bold-font);
   font-size: 8vh;
-  color: rgb(43, 43, 43)
+  color: rgb(var(--grey))
 }

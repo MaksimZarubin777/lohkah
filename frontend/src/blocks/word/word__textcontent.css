@@ -1,10 +1,30 @@
 .word__textcontent {
-  /* border: 1px solid red; */
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  color: rgb(43, 43, 43);
+  color: rgb(var(--grey))
+}
+
+.word__textcontent form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.word__textcontent input {
+  width: 70%;
+  height: 20px;
+}
+
+.word__textcontent button {
+  width: 40%;
+  font-family: var(--light-font);
+  font-size: 15px;
+  background-color:rgb(var(--red));
+  border: none;
+  height: 30px;
 }
 
 @media screen and (max-width: 550px) {

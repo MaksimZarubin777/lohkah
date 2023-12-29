@@ -1,55 +1,40 @@
-import { useEffect, useState } from "react"
+// checked
+import { LANG_CN, LANG_ENG } from "../utils/constants";
 import { login } from "../utils/languages";
-import { useAsyncError } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Login ( {onSubmit} ) {
-
-  const [formData, setFormData] = useState()
-  const [isLanguageEnglish, setIsLanguageEnglish] = useState(true)
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    })
-  }
+function Login ({ onSubmit, onChange, handleLanguage, isLanguageEnglish }) {
+  const ENG = login.eng;
+  const CN = login.cn;
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    onSubmit(formData)
-  }
-
-  const handleChangeLanguageEng = () => {
-    setIsLanguageEnglish(true)
-  }
-
-  const handleChangeLanguageCn = () => {
-    setIsLanguageEnglish(false)
+    evt.preventDefault();
+    onSubmit();
   }
 
   return (
     <div className="auth">
       <div className="auth__container">
       <div className="language">
-        <p className={isLanguageEnglish ? 'language__active' : ''} onClick={handleChangeLanguageEng}>EN</p>
-        <p className={!isLanguageEnglish ? 'language__active' : ''} onClick={handleChangeLanguageCn}>中</p>
+        <p className={isLanguageEnglish ? 'language__active' : ''} onClick={handleLanguage}>{LANG_ENG}</p>
+        <p className={!isLanguageEnglish ? 'language__active' : ''} onClick={handleLanguage}>{LANG_CN}</p>
       </div>
-        <p className="auth__title">{isLanguageEnglish ? login.eng.title : login.cn.title}</p>
+        <p className="auth__title">{isLanguageEnglish ? ENG.title : CN.title}</p>
         <form action="" method="post" className="auth__form" >
           <p className="auth__form__input-block">
-            <label>{isLanguageEnglish ? login.eng.login_input : login.cn.login_input}</label>
-            <input className="auth__form_input" onChange={handleChange} type="text" name="name" id="login" placeholder={isLanguageEnglish ? login.eng.login_placeholder : login.cn.login_placeholder} required />
+            <label>{isLanguageEnglish ? ENG.login_input : CN.login_input}</label>
+            <input className="auth__form_input" onChange={onChange} type="text" name="name" id="login" placeholder={isLanguageEnglish ? ENG.login_placeholder : CN.login_placeholder} required />
           </p>
           <p className="auth__form__input-block">
-            <label>{isLanguageEnglish ? login.eng.password_input : login.cn.password_input}</label>
-            <input className="auth__form_input" onChange={handleChange} type="password" name="password" id="password" placeholder={isLanguageEnglish ? login.eng.password_placeholder : login.cn.password_placeholder} required />
+            <label>{isLanguageEnglish ? ENG.password_input : CN.password_input}</label>
+            <input className="auth__form_input" onChange={onChange} type="password" name="password" id="password" placeholder={isLanguageEnglish ? ENG.password_placeholder : CN.password_placeholder} required />
           </p>
-          <button type="submit" className="auth__button" onClick={handleSubmit}>{isLanguageEnglish ? login.eng.button : login.cn.button}</button>
+          <button type="submit" className="auth__button" onClick={handleSubmit}>{isLanguageEnglish ? ENG.button : CN.button}</button>
         </form>
+        <p>Not registered yet? <Link to='/signup' className="link">Signup!</Link></p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

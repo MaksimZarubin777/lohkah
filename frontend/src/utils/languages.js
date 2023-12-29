@@ -7,7 +7,6 @@ export const login = {
     password_placeholder: 'Enter your password',
     button: 'Sign in'
   },
-
   cn: {
     title: '登陆',
     login_input: '名字',
@@ -16,7 +15,7 @@ export const login = {
     password_placeholder: '写上您的密码',
     button: '登陆'
   }
-}
+};
 
 export const register = {
   eng: {
@@ -43,7 +42,7 @@ export const register = {
     confirmation_placeholder: '写上你的密码',
     button: '登陆'
   }
-}
+};
 
 export const addWord = {
   eng: {
@@ -74,4 +73,4 @@ export const addWord = {
     example_placeholder: '输入示例',
     button: '更新课程'
   }
-}
+};

@@ -1,4 +1,4 @@
 .language__active {
-  color: rgb(205, 59, 54);
+  color: rgb(var(--red));
   text-decoration: underline;
 }

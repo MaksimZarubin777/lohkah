@@ -1,23 +1,119 @@
-import { useEffect, useRef } from "react";
+// checked
+import React from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import editButton from '../images/edit.png';
+import deleteButton from '../images/delete.png';
+import IsAdminContext from "../contexts/isAdminContext";
+import { 
+  DELETE_BUTTON_MESSAGE, 
+  DELETE_CONFIRMATION_MESSAGE, 
+  IS_NOT_EMPTY_MESSAGE, 
+  LESSONPAGE, 
+  LESSONSPAGE, 
+  MAINPAGE, 
+  UPDATE_BUTTON_MESSAGE 
+} from "../utils/constants";
 
-function Card ( {title} ) {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const currentPath = location.pathname
-  const MAINPAGE = '/'
-  const titleRef = useRef()
-  const cardRef = useRef()
+function Card ({ 
+  title, 
+  departmentData, 
+  lessonData, 
+  currentDepartment, 
+  handleDeleteDepartment, 
+  handleDeleteLesson, 
+  handleUpdateDepartment, 
+  handleUpdateLesson, 
+  onChange 
+}) {
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const titleRef = useRef();
+  const cardRef = useRef();
+  const isAdmin = React.useContext(IsAdminContext); //ADMIN CONTEXT
+  const [isChanging, setIsChanging] = useState(false); //toggle isChanging while clicking update button
+  const [isDelete, setIsDelete] = useState(false); //toggle isDelete while clicking delete button
+  const [isEmpty, setIsEmpty] = useState(false); //toggle isEmpty if clicked card [] empty to provide EMPTY message
+  const [noDeleteToggle, setNoDeleteToggle] = useState(false); //hepls to manage EMPTY msg and DefaultCardTemplate
 
+  // CARD MESSAGE TIMER
+  function setTimer(func, status) {
+    setTimeout(() => {
+      func(status);
+    }, 1000);
+  };
+
+  // CARD CLICK FUNCTION
   function handleClick() {
     if (currentPath === MAINPAGE) {
-      navigate(`/${title}`)
+      if (departmentData.lessons.length === 0) {
+        setIsEmpty(true);
+        setTimer(setIsEmpty, false);
+      } else {
+        navigate(LESSONSPAGE, { state: { departmentData: departmentData } })
+      };
     } else {
-      navigate('/lesson', {state:{lesson:title}})
-    }
-  }
+      if (lessonData.words.length === 0) {
+        setIsEmpty(true);
+        setTimer(setIsEmpty, false);
+      } else {
+        navigate(LESSONPAGE, { state: { lessonData:lessonData, currentDepartment:currentDepartment } })
+      };
+    };
+  };
 
+  // HANDLE CARD DELETE MESSAGES 
+  function manageDeleteClick(path) {
+    if (path.length === 0) {
+      setIsEmpty(true);
+    } else {
+      setNoDeleteToggle(true);
+      setTimer(setNoDeleteToggle, false);
+      setTimer(setIsDelete, false);
+    };
+  };
+
+  //HANDLE DELETE BUTTON CLICK 
+  function onClickDeleteButton() {
+    setIsChanging(false);
+    setIsDelete(!isDelete);
+    if (currentPath === MAINPAGE) {
+      manageDeleteClick(departmentData.lessons);
+    } else {
+      manageDeleteClick(lessonData.words);
+    };
+  };
+
+  // HANDLE API DELETE
+  function handleSubmitDelete () {
+    if (currentPath === MAINPAGE) {
+      handleDeleteDepartment(departmentData._id);
+    } else {
+      handleDeleteLesson(currentDepartment._id, lessonData._id);
+    };
+  };
+
+  // HANDLE CHANGE BUTTON CLICK 
+  function onClickUpdateButton() {
+    setIsDelete(false);
+    setIsChanging(!isChanging);
+  };
+
+  // HANDLE API UPDATE
+  const handleSubmitUpdate = (evt) => {
+    evt.preventDefault();
+    if (currentPath === MAINPAGE) {
+      handleUpdateDepartment(departmentData._id);
+      setIsChanging(!isChanging);
+    } else {
+      handleUpdateLesson(currentDepartment._id, lessonData._id);
+      setIsChanging(!isChanging);
+    };
+  };
+
+  // HANDLE CARD HOVER
   useEffect(() => {
     const cardElement = cardRef.current;
     const titleElement = titleRef.current;
@@ -33,22 +129,64 @@ function Card ( {title} ) {
   
       cardElement.addEventListener('mouseenter', handleMouseEnter);
       cardElement.addEventListener('mouseleave', handleMouseLeave);
+      cardElement.addEventListener('mouseover', handleMouseEnter);
   
       return () => {
-        // Очистка слушателей при размонтировании компонента
         cardElement.removeEventListener('mouseenter', handleMouseEnter);
         cardElement.removeEventListener('mouseleave', handleMouseLeave);
       };
     }
-  }, [cardRef, titleRef]);
+  }, [cardRef, titleRef, isChanging, isDelete]);
 
-  
+  // CODE TEMPLATES BELOW
+
+  // form changing template
+  const formUpdateTemplate = (
+    <form  onSubmit={handleSubmitUpdate}>
+      <input type="text" name="cardName" onChange={onChange}/>
+      <button>{UPDATE_BUTTON_MESSAGE}</button>
+    </form>
+  );
+
+  //default card title 
+  const cardDefaultTemplate = (
+    <h2 className="card__title" ref={titleRef}>{isEmpty ? (`${title} is empty`) : (title)}</h2>
+  );
+
+  // card delete template
+  const cardDeleteTemplate = ( 
+    isEmpty ? (      
+      <>
+        <p className="card__informcover">{DELETE_CONFIRMATION_MESSAGE} {title} ?</p>
+        <button onClick={handleSubmitDelete}>{DELETE_BUTTON_MESSAGE}</button>
+      </>
+    ) : (
+      <p className="card__informcover">{noDeleteToggle ? (`${title} ${IS_NOT_EMPTY_MESSAGE}`) : (cardDefaultTemplate)}</p>
+    )
+  );
+
+  // card delete and change buttons template
+  const cardChangeAndDeleteButtons = (
+    <>
+      <img src={editButton} alt="Update Button" className="card__manage_icon" onClick={onClickUpdateButton}/>
+      <img src={deleteButton} alt="Delete Button" className="card__manage_icon" onClick={onClickDeleteButton}/>
+    </>
+  );
 
   return (
-    <div className="card" onClick={handleClick} ref={cardRef}>
-      <h2 className="card__title" ref={titleRef}>{title}</h2>
+    <div className="card" ref={cardRef}>
+      <div className="card__manage">
+        { isAdmin ? (cardChangeAndDeleteButtons) : (null) }
+      </div>
+      <div className="card__content" onClick={ isChanging || isDelete ? null : handleClick }> 
+        { isDelete ? (cardDeleteTemplate) : (
+            isChanging ? 
+              (formUpdateTemplate) : (cardDefaultTemplate)
+          )
+        }
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Card;

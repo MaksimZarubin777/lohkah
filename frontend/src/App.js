@@ -1,9 +1,7 @@
-import './index.css'
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import { data } from './vendor/constants';
+import './index.css';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Lesson from './components/Lesson';
-import Section from './components/Section';
 import Header from './components/Header';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -11,160 +9,293 @@ import AddWords from './components/AddWords';
 import MainApi from './utils/MainApi';
 import ProtectedRouteElement from './components/ProtectedRoute';
 import Profile from './components/Profile';
+import Departments from './components/Departments';
+import Lessons from './components/Lessons';
+import IsAdminContext from './contexts/isAdminContext';
+import { ADD_WORD_PAGE, ADMIN_ID, LESSONPAGE, LESSONSPAGE, MAINPAGE, PROFILE_PAGE, SING_IN_PAGE, SING_UP_PAGE } from './utils/constants';
 
 function App() {
+  const navigate = useNavigate();
+  const [reverse, setReverse] = useState(false); //helps to reverse word translation, reverse button attached at Header
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLocalStotageChecked, setIsLocalStotageChecked] = useState(false); 
+  const [currentUser, setCurrentUser] = useState('');
+  const [currentUserDepartment, setCurrentUserDepartment] = useState();
+  const [isDataChanged, setIsDataChanged] = useState(false);
+  const [data, setData] = useState();
+  const [isContentUpdated, setIsContentUpdated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isLanguageEnglish, setIsLanguageEnglish] = useState(true);
+  const [formData, setFormData] = useState();
 
-  const navigate = useNavigate()
-  const deps = data.departments
-  const lessons = data.lessons
-  const [revers, setRevers] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLocalStotageChecked, setIsLocalStotageChecked] = useState(false)
-  const [currentUser, setCurrentUser] = useState('')
-  
-  const checkIsLoggedIn = () => {
-    const loginCheck = localStorage.getItem('isLoggedIn')
-    if (loginCheck) {
-      setIsLoggedIn(true)
-    } 
-    setIsLocalStotageChecked(true)
+
+  // getting current user & current data from BD and control if data changed
+  useEffect(() => {
+    MainApi.getContent()
+    .then((res) => {
+      setData(res.data);
+      setIsContentUpdated(true);
+  })
+    MainApi.getUser()
+    .then((user) => {
+      setCurrentUser(user.data.name);
+      setCurrentUserDepartment(user.data.department)
+      if (user.data._id === ADMIN_ID) {
+        setIsAdmin(true);
+      }
+    })
+    setIsDataChanged(false);
+  },[isDataChanged]);
+
+  // check if user has already checked in
+  useEffect(() => {
+    checkIsLoggedIn();
+  }, [])
+
+  // CHANGING LANGUAGE FUNCTION (ADDLESSON, SIGNIN, SIGNUP)
+  const handleLanguage = () => {
+    setIsLanguageEnglish(!isLanguageEnglish);
   }
 
-  useEffect(() => {
-    checkIsLoggedIn()
-  }, [])
-  
-  const handleLogin = async (values) => {
-    const { name, password } = values
+  // COLLECTING INPUTS DATA
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    console.log(formData)
+  };
 
-    // DELETE CODE BELOW
-    // setIsLoggedIn(true)
-    // localStorage.setItem('isLoggedIn', true)
-    // setCurrentUser(name)
-    // navigate('/', {replace: true})
+  // check if user has already checked in
+  const checkIsLoggedIn = () => {
+    const loginCheck = localStorage.getItem('isLoggedIn');
+    if (loginCheck) {
+      setIsLoggedIn(true);
+    } 
+    setIsLocalStotageChecked(true);
+  };
 
-
+  //handle LOGIN 
+  const handleLogin = async () => {
+    const { name, password } = formData;
     try {
       await MainApi.login(name, password)
-      setIsLoggedIn(true)
-      localStorage.setItem('isLoggedIn', true)
-      setCurrentUser(name)
-      navigate('/', {replace: true})
+      .then((user) => {
+        setCurrentUser(user.data.name);
+        setCurrentUserDepartment(user.data.department);
+        if (user.data._id === ADMIN_ID) {
+          setIsAdmin(true);
+        }
+      })
+      setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', true);
+      setFormData();
+      navigate(MAINPAGE, {replace: true});
     } catch (err) {
-      console.log(err)
-    }
-  }
+        console.log(err);
+    };
+  };
 
-  const handleRegister = async (values) => {
-    const { name, department, password, confirmation} = values
-
-     // DELETE CODE BELOW
-    setIsLoggedIn(true)
-    localStorage.setItem('isLoggedIn', true)
-    setCurrentUser(name)
-
-
+  // handle SIGNUP
+  const handleRegister = async () => {
+    const { name, department, password, confirmation} = formData;
     try {
       await MainApi.register(name, department, password, confirmation)
-      setIsLoggedIn(true)
-      setCurrentUser(name)
-      localStorage.setItem('isLoggedIn', true)
+        .then((user) => {
+          setCurrentUser(user.data.name);
+          setCurrentUserDepartment(user.data.department);
+        })
+      setIsLoggedIn(true);
+      localStorage.setItem('isLoggedIn', true);
+      setFormData();
+      navigate(MAINPAGE, {replace: true});
     } catch (err) {
-      console.log(err)
-    }
-  }
+        console.log(err);
+    };
+  };
 
-  const handleAddWord = async (values) => {
-    console.log('add test', values)
-    const { department, lesson, cn, eng, example } = values
+  // handle ADDWORD
+  const handleAddWord = async () => {
+    const { department, lessonName, cn, eng, example } = formData;
     try {
-      await MainApi.addData(department, lesson, cn, eng, example)
+      await MainApi.addData(department, lessonName, cn, eng, example)
+        .then(() => {
+          setFormData();
+        })
     } catch (err) {
-      console.log(err)
-    }
+        console.log(err);
+    };
+  };
+
+  // handle Delete word
+  const handleDeleteWord = (departmentId, lessonId, wordId) => {
+    MainApi.deleteWord(departmentId, lessonId, wordId)
+      .then(() => {
+        setIsDataChanged(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  // handle delete department
+  const handleDeleteDepartment = (departmentId) => {
+    MainApi.deleteDepartment(departmentId)
+      .then(() => {
+        setIsDataChanged(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  // handle delete lesson
+  const handleDeleteLesson = (currentDepartmentId, lessonId) => {
+    MainApi.deleteLesson(currentDepartmentId, lessonId)
+      .then(() => {
+        setIsDataChanged(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  // handle update department
+  const handleUpdateDepartment = (currentDepartmentId) => {
+    MainApi.changeDepartment(currentDepartmentId, formData)
+      .then(() => {
+        setIsDataChanged(true);
+        setFormData();
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  // handle update lesson
+  const handleUpdateLesson = (currentDepartmentId, lessonId) => {
+    MainApi.changeLesson(currentDepartmentId, lessonId, formData)
+      .then(() => {
+        setIsDataChanged(true);
+        setFormData();
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
+  }
+ 
+  // handle update word
+  const handleUpdateWord = (currentDepartmentId, lessonId, wordId) => {
+    MainApi.changeWord(currentDepartmentId, lessonId, wordId, formData)
+      .then(() => {
+        setIsDataChanged(true);
+        setFormData();
+      })
+      .catch((err) => {
+        console.log(err);
+      }
+    );
   }
 
+  // handle logout
   const handleLogOut = () => {
-    localStorage.clear()
-    setIsLoggedIn(false)
-  }
+    localStorage.clear();
+    setIsLoggedIn(false);
+  };
 
   return (
     <div className='page'>
-      {isLocalStotageChecked && (
+      {isLocalStotageChecked && isContentUpdated && (
         <>
-        
-    <Header 
-     isClickedStatus={revers} 
-     isClicked={setRevers}
-     isLoggedIn={isLoggedIn}
-    />
-   <Routes>
-
-     {/* Main page protected route */}
-     <Route path='/' element={
-       <ProtectedRouteElement 
-         element={Section}
-         isLoggedIn={isLoggedIn}
-         data={deps}
-       />
-     }/>
-
-     {/* Add word protected route */}
-     <Route path='/add' element={
-       <ProtectedRouteElement 
-         element={AddWords}
-         isLoggedIn={isLoggedIn}
-         onSubmit={handleAddWord}
-       />
-     }/>   
-
-     {/* Profile protected route */}
-     <Route path='/profile' element={
-       <ProtectedRouteElement 
-         element={Profile}
-         currentUser={currentUser}
-         isLoggedIn={isLoggedIn}
-         handleLogOut={handleLogOut}
-       />
-     }/>     
-
-     {/* FO protected route */}
-     <Route path='/fo' element={
-       <ProtectedRouteElement 
-         element={Section}
-         isLoggedIn={isLoggedIn}
-         data={lessons}
-         title='FO'
-       />
-     }/>
-
-     {/* FNB protected route */}
-     <Route path='/fnb' element={
-       <ProtectedRouteElement 
-         element={Section}
-         isLoggedIn={isLoggedIn}
-         data={lessons}
-         title='FNB'
-       />
-     }/>
-
-     {/* Lesson protected route */}
-     <Route path='/lesson' element={
-       <ProtectedRouteElement 
-         element={Lesson}
-         isLoggedIn={isLoggedIn}
-         data={lessons}
-         isReversed={revers}
-       />
-     }/>
-
-     <Route path='/signin' element={<Login onSubmit={handleLogin}/>} />
-     <Route path='/signup' element={<Register onSubmit={handleRegister}/>} />
-   </Routes>
-   </>
+          <IsAdminContext.Provider value={isAdmin}>
+            <Header 
+              reverseStatus = {reverse} 
+              handleReverseStatus = {setReverse}
+              isLoggedIn = {isLoggedIn}
+            />
+            <Routes>
+              {/* Main page protected route */}
+              <Route path={MAINPAGE} element={
+                <ProtectedRouteElement 
+                  element = {Departments}
+                  isLoggedIn = {isLoggedIn}
+                  departments = {data}
+                  handleDeleteDepartment = {handleDeleteDepartment}
+                  handleUpdateDepartment = {handleUpdateDepartment}
+                  onChange = {handleChange}
+                />
+              }/>
+              {/* Main page protected route */}
+              <Route path={LESSONSPAGE} element={
+                <ProtectedRouteElement 
+                  element = {Lessons}
+                  isLoggedIn = {isLoggedIn}
+                  handleDeleteLesson = {handleDeleteLesson}
+                  handleUpdateLesson = {handleUpdateLesson}
+                  data = {data}
+                  onChange = {handleChange}
+                />
+              }/>
+              {/* Add word protected route */}
+              <Route path={ADD_WORD_PAGE} element={
+                <ProtectedRouteElement 
+                  element = {AddWords}
+                  isLoggedIn = {isLoggedIn}
+                  onSubmit = {handleAddWord}
+                  handleLanguage = {handleLanguage}
+                  isLanguageEnglish = {isLanguageEnglish}
+                  formData = {formData}
+                  onChange = {handleChange}
+                />
+              }/>   
+              {/* Profile protected route */}
+              <Route path={PROFILE_PAGE} element={
+                <ProtectedRouteElement 
+                  element = {Profile}
+                  currentUser = {currentUser}
+                  currentUserDepartment = {currentUserDepartment}
+                  isLoggedIn = {isLoggedIn}
+                  handleLogOut = {handleLogOut}
+                />
+              }/>     
+              {/* Lesson protected route */}
+              <Route path={LESSONPAGE} element={
+                <ProtectedRouteElement 
+                  element = {Lesson}
+                  handleDeleteWord = {handleDeleteWord}
+                  handleUpdateWord = {handleUpdateWord}
+                  isLoggedIn = {isLoggedIn}
+                  isReversed = {reverse}
+                  data = {data}
+                  onChange = {handleChange}
+                />
+              }/>
+              <Route path={SING_IN_PAGE} element={
+                <Login 
+                  onSubmit = {handleLogin}
+                  onChange = {handleChange}
+                  handleLanguage = {handleLanguage}
+                  isLanguageEnglish = {isLanguageEnglish}
+                />
+              }/>
+              <Route path={SING_UP_PAGE} element={
+                <Register 
+                  onSubmit = {handleRegister} 
+                  onChange = {handleChange}
+                  handleLanguage = {handleLanguage}
+                  isLanguageEnglish = {isLanguageEnglish}
+                />
+              }/>
+            </Routes>
+          </IsAdminContext.Provider>
+        </>
       )}
- 
     </div>
   );
 }

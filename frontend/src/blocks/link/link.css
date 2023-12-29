@@ -1,0 +1,5 @@
+.link {
+  text-decoration: none;
+  color: rgb(var(--red));
+  cursor: pointer;
+}

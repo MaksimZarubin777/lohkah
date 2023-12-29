@@ -1,22 +1,40 @@
+// checked
 import { useLocation } from "react-router-dom";
 import Word from "./Word";
 
-function Lesson({ data, isReversed }) {
+function Lesson({ isReversed, data, handleDeleteWord, handleUpdateWord, onChange }) {
   const location = useLocation();
-  const lessonName = location.state.lesson;
+  const currentLesson = location.state.lessonData;
+  const currentDepartment = location.state.currentDepartment;
 
   return (
     <div className="lesson">
-      {data.map((dataElement) => {
-        if (dataElement.name === lessonName) {
+      { data.map((department) => {
+        if (department._id === currentDepartment._id) {
           return (
-            <Word word={dataElement.words} isReversed={isReversed}/>
-          )
-        } 
-        })
-      }
+            department.lessons.map((lesson) => {
+              if (lesson._id === currentLesson._id) {
+                return(
+                  lesson.words.length > 0 ? (
+                    <Word 
+                      word = {lesson.words} 
+                      currentLesson = {currentLesson} 
+                      currentDepartment = {currentDepartment} 
+                      isReversed = {isReversed} 
+                      handleDeleteWord = {handleDeleteWord} 
+                      handleUpdateWord = {handleUpdateWord}
+                      onChange = {onChange}
+                    />) : 
+                    (alert('No data')) 
+                  )
+                }
+              })
+            )
+          }
+        }
+      )}
     </div>
   );
-}
+};
 
 export default Lesson;

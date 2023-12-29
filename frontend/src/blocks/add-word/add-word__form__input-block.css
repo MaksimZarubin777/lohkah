@@ -1,26 +1,43 @@
 .add-word__form__input-block {
   margin: 0;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
 .add-word__form__input-block label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--light-font);
   margin-left: 3px;
+  font-size: 20px;
+}
+
+@media screen and (min-width: 1450px) {
+  .add-word__form__input-block label {
+    font-size: 30px;
   }
+}  
 
 .add-word__form__input-block input {
-  height: 25px;
-  border-radius: 5px;
-  border: 1px solid rgb(43, 43, 43, .6);
-  max-width: 400px;
-  font-family: 'Quicksand', sans-serif;
+  height: 35px;
+  border: 1px solid rgb(var(--grey), .6);
+  font-family: var(--light-font)
 }
 
+@media screen and (min-width: 1450px) {
+  .add-word__form__input-block input {
+    height: 40px;
+  }
+}  
+
 .add-word__form__input-block input::placeholder {
-  font-family: 'Quicksand', sans-serif;
-  font-size: 12px;
+  font-family: var(--light-font);
+  font-size: 15px;
   opacity: .7;
 }
+
+@media screen and (min-width: 1450px) {
+  .add-word__form__input-block input::placeholder  {
+    font-size: 17px;
+  }
+}  
+

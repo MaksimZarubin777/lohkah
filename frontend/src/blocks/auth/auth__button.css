@@ -1,34 +1,13 @@
 .auth__button {
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--light-font);
   font-size: 20px;
   height: 40px;
-  background-color:rgb(66, 57, 55);
+  background-color:rgb(var(--dark-grey));
   border: none;
-  /* border-radius: 5px; */
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .auth__button:hover {
-  background-color:rgb(205, 59, 54);
+  background-color:rgb(var(--red));
+  cursor: pointer;
 }
-
-/* @media screen and (max-width: 800px) {
-  .auth__button {
-    margin-top: 35px;
-    font-size: 3vw;
-  }
-  }
-
-  @media screen and (max-width: 500px) {
-    .auth__button {
-      margin-top: 30px;
-      font-size: 3.5vw;
-    }
-    }
-
-  @media screen and (max-width: 450px) {
-    .auth__button {
-      margin-top: 25px;
-      font-size: 3.5vw;
-    }
-    } */

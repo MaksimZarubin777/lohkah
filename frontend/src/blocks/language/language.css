@@ -1,10 +1,9 @@
 .language {
-  /* border: 1px solid red; */
   display: flex;
   gap: 5px;
   width: fit-content;
   align-self: flex-end;
-  font-family: 'Baseone', sans-serif;
+  font-family: var(--bold-font);
 }
 
 .language p {
@@ -16,5 +15,11 @@
   opacity: 1;
   cursor: pointer;
   text-decoration: underline;
-  color: rgb(205, 59, 54)
+  color: rgb(var(--red))
 }
+
+@media screen and (min-width: 1450px) {
+  .language {
+    font-size: 25px;
+  }
+} 

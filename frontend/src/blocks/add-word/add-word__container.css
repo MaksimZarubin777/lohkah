@@ -1,15 +1,16 @@
 .add-word__container {
-    /* border: 1px solid blue; */
-    /* border-radius: 20px; */
-    width: 70vw;
+    width: 70%;
     max-width: 400px;
     padding: 35px;
-    /* background-color:rgb(231, 222, 206, .5);
-    color: rgb(43, 43, 43) */
-
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-
-    border: 1px solid rgb(43, 43, 43, .15);
-    color: rgb(43, 43, 43)
+    border: 1px solid rgb(var(--grey), .15);
+    color: rgb(var(--grey))
 }
+
+@media screen and (min-width: 1450px) {
+    .add-word__container  {
+      max-width: 800px;
+    }
+  }  

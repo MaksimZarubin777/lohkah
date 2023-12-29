@@ -1,6 +1,6 @@
 .word__translate {
   margin: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: var(--light-font);
   font-size: 45px;
 }
 

@@ -1,32 +1,15 @@
 .auth__container {
-  /* border: 1px solid blue; */
   margin-top: 50px;
-  /* border-radius: 20px; */
-  font-family: 'Baseone', sans-serif;
+  font-family: var(--bold-font);
   width: 60vw;
-  max-width: 330px;
-  padding: 15px 35px 35px 35px;
-  /* background-color:rgb(231, 222, 206, .5); */
-  border: 1px solid rgb(43, 43, 43, .15);
-  color: rgb(43, 43, 43);
+  max-width: 400px;
+  padding: 15px 35px 5px 35px;
+  box-sizing: border-box;
+  border: 1px solid rgb(var(--grey), .15);
+  color: rgb(var(--grey));
   display: flex;
+  gap: 10px;
+  align-items: center;
   flex-direction: column;
+  text-decoration: none;
 }
-/* 
-@media screen and (max-width: 800px) {
-  .auth__container {
-    width: 40vw;
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .auth__container {
-    width: 50vw;
-  }
-}
-
-@media screen and (max-width: 550px) {
-  .auth__container {
-    width: 60vw;
-  }
-} */
