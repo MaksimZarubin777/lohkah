@@ -2,8 +2,10 @@
   width: 90vw;
   height: fit-content;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  align-items: center;
+  gap: 10px;
 }
 
 @media screen and (max-width: 550px) {

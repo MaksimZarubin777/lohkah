@@ -12,6 +12,6 @@
 
 .profile__logout:hover {
   opacity: 1;
-  color: rgb(var--red);
+  color: rgb(var(--red));
   text-decoration: underline;
 }

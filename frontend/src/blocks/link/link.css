@@ -3,3 +3,7 @@
   color: rgb(var(--red));
   cursor: pointer;
 }
+
+.link:hover {
+  text-decoration: underline;
+}

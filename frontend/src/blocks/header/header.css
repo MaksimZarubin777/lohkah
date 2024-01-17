@@ -6,3 +6,9 @@
   flex-direction: column;
   gap: 10px;
 }
+
+@media screen and (max-width: 460px) {
+  .header{
+    flex-direction: row;
+  }
+} 

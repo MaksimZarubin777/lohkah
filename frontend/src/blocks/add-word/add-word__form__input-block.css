@@ -23,6 +23,10 @@
   font-family: var(--light-font)
 }
 
+.add-word__form__input-block input:invalid {
+  box-shadow: 0 0 5px 1px rgb(var(--red));
+}
+
 @media screen and (min-width: 1450px) {
   .add-word__form__input-block input {
     height: 40px;

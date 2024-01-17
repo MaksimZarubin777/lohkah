@@ -7,9 +7,14 @@
 
 /* PAGE */
 @import url(./blocks/page/page.css);
+@import url(./blocks/page/page__title.css);
+@import url(./blocks/page/page__title_txt.css);
 
 /* LINK */
 @import url(./blocks/link/link.css);
+
+/* BUTTON */
+@import url(./blocks/buttons/button.css);
 
 /* HEADER */
 @import url(./blocks/header/header.css);
@@ -54,7 +59,6 @@
 @import url(./blocks/auth/auth__form.css);
 @import url(./blocks/auth/auth__form__input-block.css);
 @import url(./blocks/auth/auth__form_input.css);
-@import url(./blocks/auth/auth__button.css);
 
 /* ADDWORD */
 @import url(./blocks/add-word/add-word.css);
@@ -62,13 +66,43 @@
 @import url(./blocks/add-word/add-word__title.css);
 @import url(./blocks/add-word/add-word__form.css);
 @import url(./blocks/add-word/add-word__form__input-block.css);
-@import url(./blocks/add-word/add-word__button.css);
+@import url(./blocks/add-word/add-word__list.css);
 
 /* PROFILE */
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/profile/profile__logout.css);
 @import url(./blocks/profile/profile__name.css);
 
+
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/popup__element.css);
+@import url(./blocks/popup/popup__active.css);
+@import url(./blocks/popup/popup__button-close.css);
+@import url(./blocks/popup/popup__container.css);
+@import url(./blocks/popup/popup__button-submit.css);
+@import url(./blocks/popup/popup__list-element.css);
+@import url(./blocks/popup/popup__element_chosen.css);
+
 /* LANGUAGE */
 @import url(./blocks/language/language.css);
 @import url(./blocks/language/language__active.css);
+
+/* ERROR */
+@import url(./blocks/error/error.css);
+@import url(./blocks/error/error__active.css);
+
+/* TESTS */
+@import url(./blocks/tests/tests.css);
+@import url(./blocks/tests/test__container.css);
+@import url(./blocks/tests/test__main-word.css);
+@import url(./blocks/tests/test__answer-button.css);
+@import url(./blocks/tests/test__answer-button_container.css);
+@import url(./blocks/tests/test__answer-button_correct.css);
+@import url(./blocks/tests/test__answer-button_wrong.css);
+@import url(./blocks/tests/test__answer-input.css);
+@import url(./blocks/tests/test__answer-input_correct.css);
+@import url(./blocks/tests/test__answer-input_wrong.css);
+@import url(./blocks/tests/test__help.css);
+@import url(./blocks/tests/test__skip.css);
+@import url(./blocks/tests/test__final-message.css);
+@import url(./blocks/tests/test__final-link.css);

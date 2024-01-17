@@ -1,0 +1,7 @@
+.test__answer-button_container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  grid-auto-flow: row;
+  gap: 7px;
+}

@@ -6,11 +6,11 @@
   grid-auto-flow: row;
   justify-content: center;
   gap: 20px;
-  padding: 80px 35px 35px 35px;
+  padding: 0 35px 35px 35px;
   box-sizing: border-box;
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 650px) {
   .content {
     grid-template-columns: auto;
   }

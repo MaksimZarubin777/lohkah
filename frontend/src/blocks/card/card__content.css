@@ -23,9 +23,9 @@
 .card__content button {
   width: 50%;
   font-family: var(--light-font);
-  font-size: 20px;
+  font-size: 17px;
   background-color: rgb(var(--red));
   border: none;
-  border-radius: 5px;
   height: 40px;
+  cursor: pointer;
 }

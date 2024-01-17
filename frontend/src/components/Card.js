@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import editButton from '../images/edit.png';
+import excel from '../images/excel.png';
 import deleteButton from '../images/delete.png';
 import IsAdminContext from "../contexts/isAdminContext";
 import { 
@@ -24,6 +25,10 @@ function Card ({
   handleDeleteLesson, 
   handleUpdateDepartment, 
   handleUpdateLesson, 
+  setIsTestResultsRequested,
+  isTestsResultsRequested,
+  testResults,
+  createExelFile,
   onChange 
 }) {
 
@@ -93,6 +98,8 @@ function Card ({
     } else {
       handleDeleteLesson(currentDepartment._id, lessonData._id);
     };
+    setIsDelete(!isDelete);
+    setIsEmpty(!isEmpty);
   };
 
   // HANDLE CHANGE BUTTON CLICK 
@@ -138,12 +145,24 @@ function Card ({
     }
   }, [cardRef, titleRef, isChanging, isDelete]);
 
+  //HANDLE VALIDITY 
+  const handleValidity = (e) => {
+    const currentElementError = document.querySelector(`#${e.target.id}-error`)
+    if (!e.target.validity.valid) {
+      currentElementError.classList.add('error__active')
+    } 
+    if (e.target.validity.valid) {
+      currentElementError.classList.remove('error__active')
+    }
+  };
+
   // CODE TEMPLATES BELOW
 
   // form changing template
   const formUpdateTemplate = (
     <form  onSubmit={handleSubmitUpdate}>
-      <input type="text" name="cardName" onChange={onChange}/>
+      <input type="text" name="cardName" id="cardupdate" onChange={onChange} onInput={handleValidity} minLength={2} maxLength={15}/>
+      <p id="cardupdate-error" className="error">Updated title should be more  than 2 symbols</p>
       <button>{UPDATE_BUTTON_MESSAGE}</button>
     </form>
   );
@@ -165,9 +184,27 @@ function Card ({
     )
   );
 
+  const handleDownloadExcel = () => {
+    setIsTestResultsRequested(!isTestsResultsRequested)
+    if (departmentData) {
+      const testResultsByDepartment = testResults.data.filter(function (result) {
+        return result.studyingDepartment === departmentData.department
+      })
+      console.log('444', testResultsByDepartment)
+      createExelFile(testResultsByDepartment)
+    } else {
+      const testResultsByLesson = testResults.data.filter(function (result) {
+        return result.studyingLesson === lessonData.lessonName
+      })
+      createExelFile(testResultsByLesson)
+    }
+    
+  }
+
   // card delete and change buttons template
   const cardChangeAndDeleteButtons = (
     <>
+      <img src={excel} alt="Download Excel file" className="card__manage_icon" onClick={handleDownloadExcel}/>
       <img src={editButton} alt="Update Button" className="card__manage_icon" onClick={onClickUpdateButton}/>
       <img src={deleteButton} alt="Delete Button" className="card__manage_icon" onClick={onClickDeleteButton}/>
     </>

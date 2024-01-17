@@ -2,5 +2,6 @@
   margin: 0;
   font-family: var(--bold-font);
   font-size: 8vh;
-  color: rgb(var(--grey))
+  color: rgb(var(--grey));
+  text-align: center;
 }

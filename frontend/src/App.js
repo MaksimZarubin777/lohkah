@@ -1,6 +1,6 @@
 import './index.css';
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Lesson from './components/Lesson';
 import Header from './components/Header';
 import Login from './components/Login';
@@ -13,21 +13,32 @@ import Departments from './components/Departments';
 import Lessons from './components/Lessons';
 import IsAdminContext from './contexts/isAdminContext';
 import { ADD_WORD_PAGE, ADMIN_ID, LESSONPAGE, LESSONSPAGE, MAINPAGE, PROFILE_PAGE, SING_IN_PAGE, SING_UP_PAGE } from './utils/constants';
+import Tests from './components/Tests';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const XLSX = require('xlsx')
+  let excelUpperLine = [['Leka name','Leka department', 'Test name', 'Test date', 'Studying department', 'Studying lesson', 'Mistakes'] ];
   const [reverse, setReverse] = useState(false); //helps to reverse word translation, reverse button attached at Header
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
   const [isLocalStotageChecked, setIsLocalStotageChecked] = useState(false); 
   const [currentUser, setCurrentUser] = useState('');
-  const [currentUserDepartment, setCurrentUserDepartment] = useState();
+  const [currentUserDepartment, setCurrentUserDepartment] = useState('');
   const [isDataChanged, setIsDataChanged] = useState(false);
   const [data, setData] = useState();
   const [isContentUpdated, setIsContentUpdated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLanguageEnglish, setIsLanguageEnglish] = useState(true);
   const [formData, setFormData] = useState();
-
+  const [wordsAdded, setWordsAdded] = useState([]);
+  const [testResults, setTestResults] = useState()
+  const [isTestsResultsRequested, setIsTestResultsRequested] = useState(false)
+  const [isUpdated, setIsUpdated] = useState(false)
+  const [allUsers, setAllUsers] = useState()
+  const [allDepartments, setAllDepartments] = useState()
+  const [popupRequest, setPopupRequest] = useState(false)
 
   // getting current user & current data from BD and control if data changed
   useEffect(() => {
@@ -36,6 +47,8 @@ function App() {
       setData(res.data);
       setIsContentUpdated(true);
   })
+    .catch((err) => console.log(err))
+
     MainApi.getUser()
     .then((user) => {
       setCurrentUser(user.data.name);
@@ -44,13 +57,26 @@ function App() {
         setIsAdmin(true);
       }
     })
+    .catch((err) => console.log(err))
     setIsDataChanged(false);
   },[isDataChanged]);
+
+  useEffect(() => {
+    MainApi.getTestResults()
+    .then((results) => {
+      setTestResults(results)
+    })
+  }, [isTestsResultsRequested, isUpdated])
 
   // check if user has already checked in
   useEffect(() => {
     checkIsLoggedIn();
   }, [])
+
+  // makes wordsAdded clear if currentPath changed
+  useEffect(() => {
+    setWordsAdded([]);
+  }, [currentPath]);
 
   // CHANGING LANGUAGE FUNCTION (ADDLESSON, SIGNIN, SIGNUP)
   const handleLanguage = () => {
@@ -64,7 +90,6 @@ function App() {
       ...formData,
       [name]: value
     });
-    console.log(formData)
   };
 
   // check if user has already checked in
@@ -75,6 +100,8 @@ function App() {
     } 
     setIsLocalStotageChecked(true);
   };
+
+
 
   //handle LOGIN 
   const handleLogin = async () => {
@@ -88,6 +115,8 @@ function App() {
           setIsAdmin(true);
         }
       })
+      .catch((err) => console.log(err))
+
       setIsLoggedIn(true);
       localStorage.setItem('isLoggedIn', true);
       setFormData();
@@ -106,6 +135,7 @@ function App() {
           setCurrentUser(user.data.name);
           setCurrentUserDepartment(user.data.department);
         })
+        .catch((err) => console.log(err))
       setIsLoggedIn(true);
       localStorage.setItem('isLoggedIn', true);
       setFormData();
@@ -121,8 +151,10 @@ function App() {
     try {
       await MainApi.addData(department, lessonName, cn, eng, example)
         .then(() => {
-          setFormData();
+          setIsDataChanged(true);
+          setWordsAdded({...wordsAdded, [cn]: eng})
         })
+        .catch((err) => console.log(err))
     } catch (err) {
         console.log(err);
     };
@@ -203,10 +235,47 @@ function App() {
     );
   }
 
+  const handleSendTestResults = (testName, testDate, currentUser, currentUserDepartment, studyingDepartment, studyingLesson, mistakesList) => {
+    MainApi.postTestResults(testName, testDate, currentUser, currentUserDepartment, studyingDepartment, studyingLesson, mistakesList)
+  }
+
+  const createExelFile = (testResult) => {
+    testResult.map((result) => {
+      const { name, department, test, testDate, studyingDepartment, studyingLesson, mistakesList } = result
+      excelUpperLine.push([name, department, test, testDate, studyingDepartment, studyingLesson, [mistakesList]])
+    })
+    let workbook = XLSX.utils.book_new(), // Создаем файл Excel
+    worksheet = XLSX.utils.aoa_to_sheet(excelUpperLine); // Создаем таблицу в файле с данными из массива
+    workbook.SheetNames.push('Results'); // Добавляем лист с названием First list
+    workbook.Sheets['Results'] = worksheet;
+    XLSX.writeFile(workbook, 'Tests results.xlsx'); // Скачиваем файл
+  }
+
+  // const getAllUsers = () => {
+  //   MainApi.getAllUsers()
+  //   .then((users) => {
+  //     setAllUsers(users.data)
+  //   })
+  // }
+  let list = []
+  useEffect(() => {
+    MainApi.getAllUsers()
+    .then((users) => {
+      setAllUsers(users)
+      users.data.map((user) => {
+         list.push(user.department)
+      })
+      setAllDepartments(list)
+    })
+  }, [popupRequest])
+
   // handle logout
   const handleLogOut = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+    setCurrentUser('');
+    setIsAdmin(false);
+    setCurrentUserDepartment('');
   };
 
   return (
@@ -229,6 +298,10 @@ function App() {
                   handleDeleteDepartment = {handleDeleteDepartment}
                   handleUpdateDepartment = {handleUpdateDepartment}
                   onChange = {handleChange}
+                  testResults = {testResults}
+                  setIsTestResultsRequested = {setIsTestResultsRequested}
+                  isTestsResultsRequested = {isTestsResultsRequested}
+                  createExelFile = {createExelFile}
                 />
               }/>
               {/* Main page protected route */}
@@ -240,6 +313,10 @@ function App() {
                   handleUpdateLesson = {handleUpdateLesson}
                   data = {data}
                   onChange = {handleChange}
+                  testResults = {testResults}
+                  setIsTestResultsRequested = {setIsTestResultsRequested}
+                  isTestsResultsRequested = {isTestsResultsRequested}
+                  createExelFile = {createExelFile}
                 />
               }/>
               {/* Add word protected route */}
@@ -250,7 +327,7 @@ function App() {
                   onSubmit = {handleAddWord}
                   handleLanguage = {handleLanguage}
                   isLanguageEnglish = {isLanguageEnglish}
-                  formData = {formData}
+                  wordsData = {wordsAdded}
                   onChange = {handleChange}
                 />
               }/>   
@@ -262,6 +339,14 @@ function App() {
                   currentUserDepartment = {currentUserDepartment}
                   isLoggedIn = {isLoggedIn}
                   handleLogOut = {handleLogOut}
+                  testResults = {testResults}
+                  setIsTestResultsRequested = {setIsTestResultsRequested}
+                  isTestsResultsRequested = {isTestsResultsRequested}
+                  createExelFile = {createExelFile}
+                  allUsers = {allUsers}
+                  allDepartments = {allDepartments}
+                  popupRequest = {popupRequest}
+                  setPopupRequest = {setPopupRequest}
                 />
               }/>     
               {/* Lesson protected route */}
@@ -274,6 +359,17 @@ function App() {
                   isReversed = {reverse}
                   data = {data}
                   onChange = {handleChange}
+                />
+              }/>
+              {/* Tests protected route */}
+              <Route path={'/tests'} element={
+                <ProtectedRouteElement 
+                  isLoggedIn = {isLoggedIn}
+                  element = {Tests}
+                  currentUser = {currentUser}
+                  currentUserDepartment = {currentUserDepartment}
+                  handleSendResults = {handleSendTestResults}
+                  setIsUpdated = {setIsUpdated}
                 />
               }/>
               <Route path={SING_IN_PAGE} element={

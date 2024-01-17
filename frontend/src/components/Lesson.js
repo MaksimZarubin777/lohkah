@@ -25,7 +25,7 @@ function Lesson({ isReversed, data, handleDeleteWord, handleUpdateWord, onChange
                       handleUpdateWord = {handleUpdateWord}
                       onChange = {onChange}
                     />) : 
-                    (alert('No data')) 
+                    (null) 
                   )
                 }
               })

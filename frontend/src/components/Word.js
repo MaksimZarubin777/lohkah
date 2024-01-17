@@ -8,6 +8,7 @@ import editButton from '../images/edit.png';
 import deleteButton from '../images/delete.png';
 import IsAdminContext from "../contexts/isAdminContext";
 import { UPDATE_BUTTON_MESSAGE } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 function Word ({ 
   word, 
@@ -22,9 +23,11 @@ function Word ({
   const [nextButton, setNextButton] = useState(next); //hepls to toggle next button and refresh button
   const [hidden, setHidden] = useState(true); // helps to hide content
   const [isChanging, setIsChanging] = useState(false); //helps to show/hide word change form
+  const [isLastWord, setIsLastWord] = useState(false);
   const nextButtonRef = useRef();
   const prevButtonref = useRef();
   const isAdmin = React.useContext(IsAdminContext);
+  const navigate = useNavigate();
 
   // handle show next word
   function handleClickNext() {
@@ -61,10 +64,13 @@ function Word ({
   useEffect(() => {
     if (currentWordIndex === word.length - 1) {
       setNextButton(restart);
+      setIsLastWord(true)
     } else if (currentWordIndex === 0) {
       prevButtonref.current.classList.add('hidden');
+      setIsLastWord(false)
     } else {
       setNextButton(next);
+      setIsLastWord(false)
       nextButtonRef.current.classList.remove('hidden');
       prevButtonref.current.classList.remove('hidden');
     };
@@ -110,6 +116,10 @@ function Word ({
     setIsChanging(!isChanging);
   };
 
+function handleNavigateToExam () {
+  navigate('/tests', { state: { department: currentDepartment.department, lesson: currentLesson.lessonName, words: word } });
+}
+   
   // CODE TEMPLATES BELOW
 
   // word change template
@@ -152,6 +162,7 @@ function Word ({
           <img className="word__button_img" alt="Next/Refresh button" src={nextButton} ref={nextButtonRef} ></img>
         </div>
       </div>
+      {isLastWord ? <button className="button" onClick={handleNavigateToExam}>Get tested</button> : null }
     </div>
   );
 };

@@ -20,12 +20,62 @@ class Api {
       .then((res) => this._getResponseData(res));
   };
 
+  getAllUsers() {
+    return fetch(`${this._baseUrl}/users`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then((res) => this._getResponseData(res));
+  }
+
+  getAllDepartments() {
+    return fetch(`${this._baseUrl}/departments`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then((res) => this._getResponseData(res));
+  }
+
   getContent() {
     return fetch(`${this._baseUrl}`, {
       headers: this._headers,
     })
       .then((res) => this._getResponseData(res));
   };
+
+  postTestResults(test, testDate, name, department, studyingDepartment, studyingLesson, mistakesList) {
+    return fetch(`${this._baseUrl}/testresult`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        test,
+        testDate,
+        name,
+        department,
+        studyingDepartment,
+        studyingLesson,
+        mistakesList
+      }),
+      credentials: 'include',
+    })
+    .then((res) => this._getResponseData(res));
+  }
+
+  // getTestResultByDepartment(department) {
+  //   return fetch(`${this._baseUrl}/testresult/${department}`, {
+  //     headers: this._headers,
+  //     credentials: 'include',
+  //   })
+  //   .then((res) => this._getResponseData(res));
+  // }
+
+  getTestResults() {
+    return fetch(`${this._baseUrl}/testresult`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then((res) => this._getResponseData(res));
+  }
 
   login(name, password) {
     return fetch(`${this._baseUrl}/signin`, {
@@ -133,9 +183,9 @@ class Api {
 };
 
 const MainApi = new Api({
-  baseUrl: 'https://api.leka-english.online'
+  // baseUrl: 'https://api.leka-english.online'
+  baseUrl: 'http://localhost:3000'
 });
 
 export default MainApi;
-
-
+  

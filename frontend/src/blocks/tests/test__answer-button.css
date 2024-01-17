@@ -1,0 +1,16 @@
+.test__answer-button {
+  color: rgb(var(--grey));
+  font-family: var(--light-font);
+  text-transform: capitalize;
+  font-size: 24px;
+  width: 250px;
+  height: 40px;
+  background-color: rgb(var(--light-grey));
+  border: none;
+}
+
+@media screen and (max-width: 630px) {
+  .test__answer-button  {
+    width: 30vw;
+  }
+}

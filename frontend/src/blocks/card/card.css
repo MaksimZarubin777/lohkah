@@ -3,6 +3,7 @@
   width: 40vw;
   height: auto;
   min-height: 30vh;
+  /* min-width: 258px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,7 +19,7 @@
   background-color:rgb(var(--dark-grey));
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 650px) {
   .card {
     width: 70vw;
     height: 100%;

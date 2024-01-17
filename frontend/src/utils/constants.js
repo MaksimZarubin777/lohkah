@@ -12,5 +12,10 @@ module.exports = {
   SING_UP_PAGE: '/signup',
   LANG_ENG: 'EN',
   LANG_CN: '中',
-  ADMIN_ID: '65844bf170acc17d5c9f7e3b' //update to 657efa384706a065ad86badb
+  ADMIN_ID: '65844bf170acc17d5c9f7e3b', //'657efa384706a065ad86badb',;
+  DEPARTMENTS_TITLE: 'Departments',
+  DEPARTMENTS_TITLE_CN: '部门',
+  LESSONS_TITLE: 'Lessons',
+  LESSONS_TITLE_CN: '课程'
+
 };

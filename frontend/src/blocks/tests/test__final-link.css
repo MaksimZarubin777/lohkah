@@ -1,0 +1,11 @@
+.test__final-link {
+  color: rgb(var(--grey));
+  font-family: var(--light-font);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.test__final-link:hover {
+  color: rgb(var(--red));
+  text-decoration: underline;
+}

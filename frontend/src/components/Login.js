@@ -20,16 +20,16 @@ function Login ({ onSubmit, onChange, handleLanguage, isLanguageEnglish }) {
         <p className={!isLanguageEnglish ? 'language__active' : ''} onClick={handleLanguage}>{LANG_CN}</p>
       </div>
         <p className="auth__title">{isLanguageEnglish ? ENG.title : CN.title}</p>
-        <form action="" method="post" className="auth__form" >
+        <form action="" method="post" className="auth__form">
           <p className="auth__form__input-block">
-            <label>{isLanguageEnglish ? ENG.login_input : CN.login_input}</label>
-            <input className="auth__form_input" onChange={onChange} type="text" name="name" id="login" placeholder={isLanguageEnglish ? ENG.login_placeholder : CN.login_placeholder} required />
+            <label for="name">{isLanguageEnglish ? ENG.login_input : CN.login_input}</label>
+            <input className="auth__form_input" onChange={onChange} type="text" name="name" id="login" placeholder={isLanguageEnglish ? ENG.login_placeholder : CN.login_placeholder} required/>
           </p>
           <p className="auth__form__input-block">
-            <label>{isLanguageEnglish ? ENG.password_input : CN.password_input}</label>
+            <label for="password">{isLanguageEnglish ? ENG.password_input : CN.password_input}</label>
             <input className="auth__form_input" onChange={onChange} type="password" name="password" id="password" placeholder={isLanguageEnglish ? ENG.password_placeholder : CN.password_placeholder} required />
           </p>
-          <button type="submit" className="auth__button" onClick={handleSubmit}>{isLanguageEnglish ? ENG.button : CN.button}</button>
+          <button type="submit" className="button" onClick={handleSubmit}>{isLanguageEnglish ? ENG.button : CN.button}</button>
         </form>
         <p>Not registered yet? <Link to='/signup' className="link">Signup!</Link></p>
       </div>

@@ -2,6 +2,7 @@
   margin-top: 50px;
   font-family: var(--bold-font);
   width: 60vw;
+  height: fit-content;
   max-width: 400px;
   padding: 15px 35px 5px 35px;
   box-sizing: border-box;
@@ -13,3 +14,9 @@
   flex-direction: column;
   text-decoration: none;
 }
+
+@media screen and (max-width: 460px) {
+  .auth__container {
+    width: auto;
+  }
+} 
