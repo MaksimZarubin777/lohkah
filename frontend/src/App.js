@@ -14,6 +14,7 @@ import Lessons from './components/Lessons';
 import IsAdminContext from './contexts/isAdminContext';
 import { ADD_WORD_PAGE, ADMIN_ID, LESSONPAGE, LESSONSPAGE, MAINPAGE, PROFILE_PAGE, SING_IN_PAGE, SING_UP_PAGE } from './utils/constants';
 import Tests from './components/Tests';
+import Dialogue from './components/Dialogue';
 
 function App() {
   const navigate = useNavigate();
@@ -386,6 +387,11 @@ function App() {
                   onChange = {handleChange}
                   handleLanguage = {handleLanguage}
                   isLanguageEnglish = {isLanguageEnglish}
+                />
+              }/>
+              <Route path={'/dialogue'} element={
+                <Dialogue 
+
                 />
               }/>
             </Routes>

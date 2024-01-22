@@ -30,9 +30,19 @@ const [popupName, setPopupName] = useState()
       <h2 className="profile__name">Welcome, {currentUser}!</h2>
       <p>Name: {currentUser}</p>
       <p>Department: {currentUserDepartment}</p>
-      {isAdmin ? <p onClick={getResults}>Get all results (Excel)</p> : null}
-      {isAdmin ? <p onClick={openPopupWithUsers}>Get user results</p> : null}
-      {isAdmin ? <p onClick={openPopupWithuDepartments}>Get department results</p> : null}
+      {isAdmin ? (
+        <div className='profile__results_container'>
+          <div className='profile__result' onClick={getResults}>
+            <p>All results</p>
+          </div>
+          <div className='profile__result' onClick={openPopupWithUsers}>
+            <p>Results by Users</p>
+          </div>
+          <div className='profile__result' onClick={openPopupWithuDepartments}>
+            <p>Results by Departments</p>
+          </div>
+      </div>
+      ) : (null)}
       <PopUp 
         setPopupRequest = {setPopupRequest}
         setIsTestResultsRequested = {setIsTestResultsRequested}

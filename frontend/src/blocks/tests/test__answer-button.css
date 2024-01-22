@@ -4,13 +4,14 @@
   text-transform: capitalize;
   font-size: 24px;
   width: 250px;
-  height: 40px;
+  min-width: 150px;
+  min-height: 40px;
   background-color: rgb(var(--light-grey));
   border: none;
 }
 
-@media screen and (max-width: 630px) {
+@media screen and (max-width: 610px) {
   .test__answer-button  {
-    width: 30vw;
+    width: 40vw;
   }
 }
