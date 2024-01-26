@@ -12,15 +12,14 @@ function TestWithFourWords ({
   testDate,
   setIsUpdated
  }) {
-  
-  const wordList = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+
   const answersList = [];
   const [curentWordIndex, setCurrentWordIndex] = useState(0);
   const testName = '4words'
 
   const createAnswers = (answers) => {
     for (let i = 0; i < 3; i++) {
-      answers.push(wordList[Math.floor(Math.random() * wordList.length)])
+      answers.push(studyingWords[Math.floor(Math.random() * studyingWords.length)].eng)
     }
     answers.push(studyingWords[curentWordIndex].eng)
     return answers;

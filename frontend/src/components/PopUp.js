@@ -53,8 +53,7 @@ function PopUp({
     const testResultsByUsersOrDepartments = testResults.data.filter(function (result) {
       return chosenElements.includes(popupName === 'name' ? result.name : result.department)
     })
-    console.log('here',testResultsByUsersOrDepartments)
-    // createExelFile(testResultsByUserOrDepartment)
+    createExelFile(testResultsByUsersOrDepartments)
   }
   
   return (

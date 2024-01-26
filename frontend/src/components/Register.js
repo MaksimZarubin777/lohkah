@@ -41,7 +41,7 @@ const handleSubmit = (evt) => {
           </p>
           <button type="submit" className="button">{isLanguageEnglish ? ENG.button : CN.button}</button>
         </form>
-        <p>Already registered? <Link to='/signin' className="link">Signin!</Link></p>
+        <p>{isLanguageEnglish ? ENG.invitation_message : CN.invitation_message}<Link to='/signin' className="link">{isLanguageEnglish ? ENG.invitation_link : CN.invitation_link}</Link></p>
       </div>
     </div>
   );

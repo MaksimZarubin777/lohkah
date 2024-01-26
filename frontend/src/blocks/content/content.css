@@ -1,5 +1,5 @@
 .content {
-  height: 100vh;
+  height: fit-content;
   display: grid;
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;

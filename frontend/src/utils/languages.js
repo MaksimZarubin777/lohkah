@@ -5,15 +5,19 @@ export const login = {
     login_placeholder: 'Enter your name',
     password_input: 'Password',
     password_placeholder: 'Enter your password',
-    button: 'Sign in'
+    button: 'Sign in',
+    invitation_message: 'Not registered yet? ',
+    invitation_link: 'Signup!'
   },
   cn: {
-    title: '登陆',
+    title: '登录',
     login_input: '名字',
     login_placeholder: '写上您的名字',
     password_input: '密码',
     password_placeholder: '写上您的密码',
-    button: '登陆'
+    button: '登录',
+    invitation_message: '还没登记吗？ ',
+    invitation_link: '登记!'
   }
 };
 
@@ -28,10 +32,12 @@ export const register = {
     password_placeholder: 'Enter your password',
     confirmation_input: 'Confirm password',
     confirmation_placeholder: 'Enter your password',
-    button: 'Sign up'
+    button: 'Sign up',
+    invitation_message: 'Already registered? ',
+    invitation_link: 'Signin!'
   },
   cn: {
-    title: '登陆',
+    title: '登记',
     login_input: '名字',
     login_placeholder: '写上你的名字',
     department_input: '部门',
@@ -40,7 +46,9 @@ export const register = {
     password_placeholder: '写上你的密码',
     confirmation_input: '密码',
     confirmation_placeholder: '写上你的密码',
-    button: '登陆'
+    button: '登记',
+    invitation_message: '已登记了吗？',
+    invitation_link: '登录!'
   }
 };
 

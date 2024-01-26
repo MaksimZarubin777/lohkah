@@ -45,6 +45,7 @@
 @import url(./blocks/word/word__example.css);
 @import url(./blocks/word/word__button.css);
 @import url(./blocks/word/word__button_img.css);
+@import url(./blocks/word/word__admin-panel.css);
 
 /* TRANSITION */
 @import url(./blocks/transitiom.css);

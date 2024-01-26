@@ -62,8 +62,13 @@ function Word ({
  
   // handle previous next refresh buttons 
   useEffect(() => {
-    if (currentWordIndex === word.length - 1) {
+    if (currentWordIndex === word.length - 1 && word.length > 1) {
       setNextButton(restart);
+      setIsLastWord(true)
+      return
+    } else if (word.length === 1) {
+      nextButtonRef.current.classList.add('hidden');
+      prevButtonref.current.classList.add('hidden');
       setIsLastWord(true)
     } else if (currentWordIndex === 0) {
       prevButtonref.current.classList.add('hidden');
@@ -150,6 +155,10 @@ function handleNavigateToExam () {
 
   return (
     <div className="word">
+      <div className="word__admin-panel">
+        {isAdmin ? (wordChangeAndDeleteButtons) : (null)}
+      </div>
+      
       <div className="word__content">
         <div className="word__button" onClick={handleClickPrevious}>
           <img className="word__button_img" alt="Previous word" src={previous} ref={prevButtonref} onClick={handleClickPrevious}></img>
@@ -157,7 +166,7 @@ function handleNavigateToExam () {
         <div className="word__textcontent" onClick={handleShowContent}>
           {isChanging ? (formUpdateTemplate) : (defaultWordTemplate)}
         </div>
-        {isAdmin ? (wordChangeAndDeleteButtons) : (null)}
+        
         <div className="word__button" onClick={handleClickNext}>
           <img className="word__button_img" alt="Next/Refresh button" src={nextButton} ref={nextButtonRef} ></img>
         </div>

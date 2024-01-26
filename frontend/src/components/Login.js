@@ -31,7 +31,7 @@ function Login ({ onSubmit, onChange, handleLanguage, isLanguageEnglish }) {
           </p>
           <button type="submit" className="button" onClick={handleSubmit}>{isLanguageEnglish ? ENG.button : CN.button}</button>
         </form>
-        <p>Not registered yet? <Link to='/signup' className="link">Signup!</Link></p>
+        <p>{isLanguageEnglish ? ENG.invitation_message : CN.invitation_message}<Link to='/signup' className="link">{isLanguageEnglish ? ENG.invitation_link : CN.invitation_link}</Link></p>
       </div>
     </div>
   );
