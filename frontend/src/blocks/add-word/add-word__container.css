@@ -6,8 +6,10 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgb(var(--grey), .15);
-    color: rgb(var(--grey))
+    /* border: 1px solid rgb(var(--grey), .15); */
+    color: rgb(var(--grey));
+    border-radius: 10px;
+    box-shadow: 0 80px 200px 5px rgb(var(--grey));
 }
 
 @media screen and (min-width: 1450px) {

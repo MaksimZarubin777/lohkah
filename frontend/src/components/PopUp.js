@@ -32,7 +32,6 @@ function PopUp({
     popupRef.current.classList.remove('popup__active')
   }
 
-
   const handleClick = (id) => {
     const listElement = document.querySelector('#users-list')
     const element = listElement.querySelector(`#user-${id}`)

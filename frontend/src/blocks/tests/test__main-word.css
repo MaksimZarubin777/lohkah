@@ -4,6 +4,7 @@
   font-size: 78px;
   margin: 15px 0 15px 0;
   text-align: center;
+  word-break: break-word;
 }
 
 /* @media screen and (min-width: 1380px) {

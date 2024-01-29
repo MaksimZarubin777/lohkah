@@ -115,13 +115,12 @@ function App() {
         if (user.data._id === ADMIN_ID) {
           setIsAdmin(true);
         }
+        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', true);
+        setFormData();
+        navigate(MAINPAGE, {replace: true});
       })
       .catch((err) => console.log(err))
-
-      setIsLoggedIn(true);
-      localStorage.setItem('isLoggedIn', true);
-      setFormData();
-      navigate(MAINPAGE, {replace: true});
     } catch (err) {
         console.log(err);
     };
@@ -135,12 +134,12 @@ function App() {
         .then((user) => {
           setCurrentUser(user.data.name);
           setCurrentUserDepartment(user.data.department);
+          setIsLoggedIn(true);
+          localStorage.setItem('isLoggedIn', true);
+          setFormData();
+          navigate(MAINPAGE, {replace: true});
         })
         .catch((err) => console.log(err))
-      setIsLoggedIn(true);
-      localStorage.setItem('isLoggedIn', true);
-      setFormData();
-      navigate(MAINPAGE, {replace: true});
     } catch (err) {
         console.log(err);
     };
@@ -166,6 +165,7 @@ function App() {
     MainApi.deleteWord(departmentId, lessonId, wordId)
       .then(() => {
         setIsDataChanged(true);
+        setFormData();
       })
       .catch((err) => {
         console.log(err);

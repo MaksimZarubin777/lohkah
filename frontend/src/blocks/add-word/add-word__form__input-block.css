@@ -20,6 +20,7 @@
 .add-word__form__input-block input {
   height: 35px;
   border: 1px solid rgb(var(--grey), .6);
+  border-radius: 5px;
   font-family: var(--light-font)
 }
 

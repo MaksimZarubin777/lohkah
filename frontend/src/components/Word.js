@@ -124,15 +124,15 @@ function Word ({
 function handleNavigateToExam () {
   navigate('/tests', { state: { department: currentDepartment.department, lesson: currentLesson.lessonName, words: word } });
 }
-   
+
   // CODE TEMPLATES BELOW
 
   // word change template
   const formUpdateTemplate = (
     <form  onSubmit={handleSubmit}>
-      <input type="text" name="cn" placeholder={word[currentWordIndex].cn} onChange={onChange}/>
-      <input type="text" name="eng" placeholder={word[currentWordIndex].eng} onChange={onChange}/>
-      <input type="text" name="example" placeholder={word[currentWordIndex].example} onChange={onChange}/>
+      <input type="text" name="cn" placeholder={word[currentWordIndex].cn} onChange={onChange} required minLength={1} maxLength={10}/>
+      <input type="text" name="eng" placeholder={word[currentWordIndex].eng} onChange={onChange} required minLength={2} maxLength={18}/>
+      <input type="text" name="example" placeholder={word[currentWordIndex].example} onChange={onChange} minLength={5} maxLength={30}/>
       <button>{UPDATE_BUTTON_MESSAGE}</button>
     </form>
   );

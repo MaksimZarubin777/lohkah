@@ -9,7 +9,6 @@
   word-wrap: break-word;
   background-color:rgb(var(--light-grey), .5);
   gap: 5px;
-  border: 1px solid red;
 }
 
 @media screen and (max-width: 550px) {

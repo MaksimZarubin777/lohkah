@@ -7,5 +7,5 @@
   display: none;
   flex-direction: column;
   gap: 3px;
-  border: 1px solid rgb(var(--red));
+  border: 1px solid rgb(var(--grey));
 }

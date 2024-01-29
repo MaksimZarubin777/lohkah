@@ -46,8 +46,8 @@ function AddWords ({ onSubmit, handleLanguage, isLanguageEnglish, onChange, word
         <form action="" method="post" className="add-word__form" onSubmit={handleSubmit} novalidate>
           <p className="add-word__form__input-block">
             <label for="department">{isLanguageEnglish ? ENG.department_input : CN.department_input}</label>
-            <input type="text" onChange={onChange} onInput={handleValidity} name="department" id="department" placeholder={isLanguageEnglish ? ENG.department_placeholder : CN.department_placeholder} required minLength={2} maxLength={10}/>
-            <p id="department-error" className="error">Department should be from 2 to 10 symbols</p>
+            <input type="text" onChange={onChange} onInput={handleValidity} name="department" id="department" placeholder={isLanguageEnglish ? ENG.department_placeholder : CN.department_placeholder} required minLength={2} maxLength={15}/>
+            <p id="department-error" className="error">Department should be from 2 to 15 symbols</p>
           </p>
           <p className="add-word__form__input-block">
             <label for="lesson">{isLanguageEnglish ? ENG.lesson_input : CN.lesson_input}</label>
